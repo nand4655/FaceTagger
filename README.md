@@ -39,7 +39,7 @@ FaceTagger is an iOS application that allows users to detect faces in their phot
 1. Launch the app.
 2. Allow access to your photo library.
 3. Select a photo to detect faces.
-4. Tag detected faces with names.
+4. Tag detected faces using longtap on face rectangle with names.
 
 ## Architecture
 
