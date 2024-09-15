@@ -95,4 +95,10 @@ class ContentViewModel: ObservableObject {
             }
         }
     }
+    
+    func clearLastScan() {
+        Task { @MainActor [weak self] in
+            self?.faceModels = []
+        }
+    }
 }

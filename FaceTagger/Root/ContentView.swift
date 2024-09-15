@@ -59,6 +59,7 @@ struct ContentView: View {
                                 }
                                 Button {
                                     Task {
+                                        viewModel.clearLastScan()
                                         await viewModel.loadPhotos()
                                     }
                                 } label: {
