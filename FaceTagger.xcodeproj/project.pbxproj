@@ -119,7 +119,7 @@
 				1EDC081A2C9731A600C2A989 /* Service */,
 				1EDC08192C97319E00C2A989 /* Model */,
 				1EDC08182C97319800C2A989 /* ViewModel */,
-				1EDC08172C97318C00C2A989 /* UI */,
+				1EDC08172C97318C00C2A989 /* View */,
 				1E7522532C96ACA500B2786E /* Assets.xcassets */,
 				1E7522552C96ACA500B2786E /* Preview Content */,
 			);
@@ -151,7 +151,7 @@
 			path = FaceTaggerUITests;
 			sourceTree = "<group>";
 		};
-		1EDC08172C97318C00C2A989 /* UI */ = {
+		1EDC08172C97318C00C2A989 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				1EDC08152C97301C00C2A989 /* CircularProgressView.swift */,
@@ -160,7 +160,7 @@
 				1E7522812C96CE9800B2786E /* PhotoLibraryPermissionView.swift */,
 				1EDC081F2C9746BF00C2A989 /* FaceGridView.swift */,
 			);
-			path = UI;
+			path = View;
 			sourceTree = "<group>";
 		};
 		1EDC08182C97319800C2A989 /* ViewModel */ = {
