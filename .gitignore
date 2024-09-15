@@ -1,0 +1,30 @@
+# Ignore package resolution file
+xcuserdata/
+Package.resolved
+Podfile.lock
+Pods/
+
+# Ignore user interface state file
+*.xcuserstate
+
+# Other common entries for Swift projects
+# User-specific files
+*.xcuserdatad
+*.xcscmblueprint
+
+# Build products
+*.app
+*.app.dSYM
+*.framework
+*.framework.dSYM
+.build/
+DerivedData/
+
+# Dependencies
+Carthage/Build/
+Carthage/Checkouts/
+
+# Swift Package Manager
+.swiftpm/
+IDEWorkspaceChecks.plist
+contents.xcworkspacedata
