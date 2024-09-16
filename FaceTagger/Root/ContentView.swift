@@ -17,7 +17,8 @@ struct ContentView: View {
     @State private var tagName = ""
     @State private var selectedFace: VNFaceObservation?
     @State private var selectedFaceModelId: UUID?
-    
+    @State private var selectedFaceModel: FaceImageModel?
+    @State private var isActive = false
     var body: some View {
         NavigationStack {
             ZStack {
@@ -25,25 +26,29 @@ struct ContentView: View {
                     .ignoresSafeArea(.all)
                 VStack {
                     if viewModel.permissionGranted {
-                        if viewModel.isLoading {
-                            CircularProgressView(progress: $viewModel.loadingProgress)
-                        } else {
-                            VStack(alignment: .center) {
-                                ScrollView {
-                                    LazyVGrid(columns: columns, spacing: 16) {
-                                        ForEach(viewModel.faceModels, id: \.id) { faceModel in
+                        VStack(alignment: .center) {
+                            ScrollView {
+                                LazyVGrid(columns: columns, spacing: 16) {
+                                    ForEach(viewModel.faceModels, id: \.id) { faceModel in
+                                        NavigationLink(
+                                            destination:
+                                                FaceDetectionView(image: faceModel.image ?? UIImage(), faceObservations: faceModel.observations ?? [], tags: faceModel.tags)
+                                            {
+                                                faceObservation in
+                                                selectedFace = faceObservation
+                                                tagName = faceModel.tags[faceObservation] ?? ""
+                                                selectedFaceModelId = faceModel.id
+                                                showTaggingSheet = true
+                                            }
+                                            ,isActive: Binding(
+                                                get: { selectedFaceModel?.id == faceModel.id && isActive },
+                                                set: { isActive = $0 }
+                                            )
+                                        ) {
                                             VStack {
-                                                NavigationLink(destination:
-                                                                FaceOverlayViewRepresentable(image: faceModel.image, faceObservations: faceModel.observations, tags: faceModel.tags)
-                                                               {
-                                                    faceObservation in
-                                                    selectedFace = faceObservation
-                                                    tagName = faceModel.tags[faceObservation] ?? ""
-                                                    selectedFaceModelId = faceModel.id
-                                                    showTaggingSheet = true
-                                                }
-                                                    .frame(width: faceModel.image.size.width, height: faceModel.image.size.height), label: {      FaceGridView(croppedFaceImages: faceModel.croppedFaceImages)
-                                                    })
+                                                Image(uiImage: faceModel.thumbnail)
+                                                    .resizable()
+                                                    .frame(height: 120)
                                             }
                                             .frame(height: 180)
                                             .background(Color.white)
@@ -53,18 +58,44 @@ struct ContentView: View {
                                                 RoundedRectangle(cornerRadius: 10)
                                                     .stroke(Color.blue, lineWidth: 1)
                                             )
+                                            .onTapGesture {
+                                                if faceModel.image == nil {
+                                                    Task {
+                                                        await viewModel.updateObservations(faceModel.id)
+                                                        DispatchQueue.main.async {
+                                                            self.selectedFaceModel = faceModel
+                                                            self.isActive = true
+                                                        }
+                                                    }
+                                                }
+                                                else {
+                                                    self.selectedFaceModel = faceModel
+                                                    self.isActive = true
+                                                }
+                                                
+                                            }
                                         }
                                     }
+                                }
+                                .padding()
+                            }
+                            
+                            if viewModel.faceModels.isEmpty, !viewModel.isLoading {
+                                Text("Couldn't find any face in photo gallery. Add photos with faces and try rescain again!")
+                                    .font(.system(size: 24, weight: .semibold))
+                                    .foregroundStyle(.black)
                                     .padding()
-                                }
+                                    .padding(.bottom, 24)
                                 
-                                if viewModel.faceModels.isEmpty {
-                                    Text("Couldn't find any face in photo gallery. Add photos with faces and try rescain again!")
-                                        .font(.system(size: 24, weight: .semibold))
-                                        .padding()
-                                        .padding(.bottom, 24)
-                                    
-                                }
+                            }
+                            if viewModel.isLoading {
+                                CustomProgressView(progress: $viewModel.loadingProgress)
+                                    .frame(height: 52)
+                                    .padding()
+                                    .transition(.opacity)
+                                
+                            }
+                            else {
                                 Button {
                                     Task {
                                         viewModel.clearLastScan()
@@ -79,11 +110,13 @@ struct ContentView: View {
                                         .background(Color.blue.opacity(0.5))
                                         .cornerRadius(15)
                                         .padding()
+                                        .transition(.opacity)
                                 }
                                 .frame(height: 52)
                             }
-                            .padding(.top, 44)
                         }
+                        .padding(.top, 44)
+                        
                     }
                     else {
                         PhotoLibraryPermissionView()

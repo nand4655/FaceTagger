@@ -10,6 +10,28 @@ import SwiftUI
 import Vision
 import UIKit
 
+struct FaceOverlayViewWrapper: View {
+    var image: UIImage
+    var faceObservations: [VNFaceObservation]
+    var tags: [VNFaceObservation: String]
+    @Binding var isActive: Bool // Receive the binding
+
+    var onFaceSelected: ((VNFaceObservation) -> Void)?
+
+    var body: some View {
+        FaceOverlayViewRepresentable(
+            image: image,
+            faceObservations: faceObservations,
+            tags: tags,
+            onFaceLongTap: onFaceSelected
+        )
+        .onDisappear {
+            // Reset isActive when navigating back
+            isActive = false
+        }
+    }
+}
+
 struct FaceOverlayViewRepresentable: UIViewRepresentable {
     var image: UIImage
     var faceObservations: [VNFaceObservation]
@@ -46,18 +68,18 @@ struct FaceOverlayViewRepresentable: UIViewRepresentable {
         @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
             guard gesture.state == .began else { return }
             let location = gesture.location(in: gesture.view)
-            
+
             for faceObservation in parent.faceObservations {
                 let boundingBox = faceObservation.boundingBox
                 let size = gesture.view?.bounds.size ?? .zero
-                
+
                 let x = boundingBox.origin.x * size.width
                 let y = (1 - boundingBox.origin.y - boundingBox.height) * size.height
                 let width = boundingBox.width * size.width
                 let height = boundingBox.height * size.height
-                
+
                 let faceRect = CGRect(x: x, y: y, width: width, height: height)
-                
+
                 if faceRect.contains(location) {
                     parent.onFaceLongTap?(faceObservation)
                     break

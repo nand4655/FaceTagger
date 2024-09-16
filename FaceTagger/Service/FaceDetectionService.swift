@@ -11,12 +11,12 @@ import Vision
 import UIKit
 
 protocol IFaceDetection {
-    func detectFaces(in image: UIImage) async -> [VNFaceObservation]?
+    func detectFaces(in image: UIImage?) async -> [VNFaceObservation]?
 }
 
 class FaceDetectionService: IFaceDetection {
-    func detectFaces(in image: UIImage) async -> [VNFaceObservation]? {
-        guard let ciImage = CIImage(image: image) else {
+    func detectFaces(in image: UIImage?) async -> [VNFaceObservation]? {
+        guard let image = image, let ciImage = CIImage(image: image) else {
             return nil
         }
         

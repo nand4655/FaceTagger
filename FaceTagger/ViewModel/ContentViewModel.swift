@@ -49,23 +49,17 @@ class ContentViewModel: ObservableObject {
         let totalImages = images.count
         
         for (index, image) in images.enumerated() {
-            let faces = await faceDetectionService.detectFaces(in: image)
-            appendFaceModel(faces: faces, image: image)
+            if let thumbnail = await photoLibraryService.fetchThumnbnail(asset: image, thumbnail: false), let faces = await faceDetectionService.detectFaces(in: thumbnail), !faces.isEmpty {
+                DispatchQueue.main.async {
+                    self.faceModels.append(FaceImageModel(asset: image, thumbnail: thumbnail, observations: nil, croppedFaceImages: nil))
+                }
+            }
             updateProgress(Double(index + 1) / Double(totalImages))
         }
         
         //TODO: Remove this delay. This delay is to simulate progress
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.setLoading(false)
-        }
-    }
-    
-    private func appendFaceModel(faces: [VNFaceObservation]?, image: UIImage) {
-        guard let faceObservations = faces, !faceObservations.isEmpty else { return }
-        
-        Task { @MainActor [weak self] in
-            let croppedFaceImages = image.cropFaces(from: faceObservations)
-            self?.faceModels.append(FaceImageModel(image: image, observations: faceObservations, croppedFaceImages: croppedFaceImages))
         }
     }
     
@@ -87,6 +81,15 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    func updateObservations(_ faceImageId: UUID) async {
+        if let index = faceModels.firstIndex(where: { $0.id == faceImageId }) {
+            let image = await photoLibraryService.fetchImage(asset: faceModels[index].asset)
+            let faces = await faceDetectionService.detectFaces(in: image)
+            await MainActor.run {
+                self.faceModels[index].updateFaceObservation(observations:faces, with: image)
+            }
+        }
+    }
     
     func updateTag(_ faceImageId: UUID, for face: VNFaceObservation, with tag: String) {
         if let index = faceModels.firstIndex(where: { $0.id == faceImageId }) {

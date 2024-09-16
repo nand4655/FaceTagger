@@ -12,7 +12,9 @@ import SwiftUI
 
 protocol IPhotoLibraryService {
     func requestPhotoLibraryAccess() async -> Bool
-    func fetchPhotos() async -> [UIImage]
+    func fetchPhotos() async -> [PHAsset]
+    func fetchThumnbnail(asset: PHAsset, thumbnail: Bool) async -> UIImage?
+    func fetchImage(asset: PHAsset) async -> UIImage?
 }
 
 class PhotoLibraryService: IPhotoLibraryService {
@@ -24,25 +26,46 @@ class PhotoLibraryService: IPhotoLibraryService {
         }
     }
 
-    func fetchPhotos() async -> [UIImage] {
+    func fetchPhotos() async -> [PHAsset] {
         await withCheckedContinuation { continuation in
-            var images = [UIImage]()
+            var allAssets = [PHAsset]()
             let fetchOptions = PHFetchOptions()
             let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
             
+            allPhotos.enumerateObjects { (asset, index, stop) in
+                allAssets.append(asset)
+            }
+            continuation.resume(returning: allAssets)
+        }
+    }
+    
+    func fetchThumnbnail(asset: PHAsset, thumbnail: Bool) async -> UIImage? {
+        return await withCheckedContinuation { continuation in
             let imageManager = PHImageManager.default()
             let options = PHImageRequestOptions()
-            options.isSynchronous = true
+            options.isSynchronous = false
+            options.deliveryMode = .fastFormat
+            
+            let targetSize = CGSize(width:  200, height: 200)
+            
+            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options) { (image, info) in
+                continuation.resume(returning: image)
+            }
+        }
+    }
+    
+    func fetchImage(asset: PHAsset) async -> UIImage? {
+        return await withCheckedContinuation { continuation in
+            let imageManager = PHImageManager.default()
+            let options = PHImageRequestOptions()
+            options.isSynchronous = false
             options.deliveryMode = .highQualityFormat
             
-            allPhotos.enumerateObjects { (asset, index, stop) in
-                imageManager.requestImage(for: asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .aspectFit, options: options) { (image, info) in
-                    if let image = image {
-                        images.append(image)
-                    }
-                }
+            let targetSize = CGSize(width:  asset.pixelWidth, height: asset.pixelHeight)
+            
+            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options) { (image, info) in
+                continuation.resume(returning: image)
             }
-            continuation.resume(returning: images)
         }
     }
 }
