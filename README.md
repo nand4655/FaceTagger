@@ -15,6 +15,10 @@ FaceTagger is an iOS application that allows users to detect faces in their phot
 ![Screenshot2](Screenshots/2.png)
 ![Screenshot3](Screenshots/3.png)
 
+## ScreenRecording
+![ScreenRecording](Screenshots/screen_rec.mp4)
+
+
 ## Requirements
 
 - iOS 17.2+
