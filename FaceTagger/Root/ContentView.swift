@@ -28,7 +28,7 @@ struct ContentView: View {
                         if viewModel.isLoading {
                             CircularProgressView(progress: $viewModel.loadingProgress)
                         } else {
-                            VStack {
+                            VStack(alignment: .center) {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 16) {
                                         ForEach(viewModel.faceModels, id: \.id) { faceModel in
@@ -56,6 +56,14 @@ struct ContentView: View {
                                         }
                                     }
                                     .padding()
+                                }
+                                
+                                if viewModel.faceModels.isEmpty {                 
+                                    Text("Couldn't find any face in photo gallery. Add photos with faces and try rescain again!")
+                                        .font(.system(size: 24, weight: .semibold))
+                                        .padding()
+                                        .padding(.bottom, 24)
+                                    
                                 }
                                 Button {
                                     Task {

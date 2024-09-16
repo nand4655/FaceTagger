@@ -61,7 +61,7 @@ class ContentViewModel: ObservableObject {
     }
     
     private func appendFaceModel(faces: [VNFaceObservation]?, image: UIImage) {
-        guard let faceObservations = faces else { return }
+        guard let faceObservations = faces, !faceObservations.isEmpty else { return }
         
         Task { @MainActor [weak self] in
             let croppedFaceImages = image.cropFaces(from: faceObservations)
