@@ -54,7 +54,7 @@ class PhotoLibraryService: IPhotoLibraryService {
             options.isNetworkAccessAllowed = true
             options.deliveryMode = deliveryMode
             
-            let targetSize = CGSize(width:  200, height: 200)            
+            let targetSize = CGSize(width:  200, height: 200)
             imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options) { (image, info) in
                 continuation.resume(returning: image)
             }

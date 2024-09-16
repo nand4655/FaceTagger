@@ -49,16 +49,12 @@ struct ContentView: View {
                                             VStack {
                                                 Image(uiImage: faceModel.thumbnail)
                                                     .resizable()
+                                                    .aspectRatio(contentMode: .fit)
                                                     .frame(height: 120)
                                             }
-                                            .frame(height: 180)
+                                            .frame(height: 150)
                                             .background(Color.white)
                                             .cornerRadius(10)
-                                            .shadow(color: .gray, radius: 5, x: 0, y: 2)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(Color.blue, lineWidth: 1)
-                                            )
                                             .onTapGesture {
                                                 if faceModel.image == nil {
                                                     Task {
