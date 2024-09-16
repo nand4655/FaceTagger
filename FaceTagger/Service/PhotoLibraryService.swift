@@ -33,6 +33,7 @@ class PhotoLibraryService: IPhotoLibraryService {
             let imageManager = PHImageManager.default()
             let options = PHImageRequestOptions()
             options.isSynchronous = true
+            options.deliveryMode = .highQualityFormat
             
             allPhotos.enumerateObjects { (asset, index, stop) in
                 imageManager.requestImage(for: asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .aspectFit, options: options) { (image, info) in
