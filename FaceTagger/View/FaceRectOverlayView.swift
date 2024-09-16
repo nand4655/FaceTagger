@@ -10,11 +10,19 @@
 import SwiftUI
 import Vision
 
-struct FaceDetectionView: View {
+import SwiftUI
+import Vision
+
+struct FaceRectOverlayView: View {
     let image: UIImage
     let faceObservations: [VNFaceObservation]
     let tags: [VNFaceObservation: String]
     var onFaceLongTap: ((VNFaceObservation) -> Void)?
+    
+    @State private var currentScale: CGFloat = 1.0
+    @State private var lastScale: CGFloat = 1.0
+    @State private var currentOffset: CGSize = .zero
+    @State private var lastOffset: CGSize = .zero
     
     var body: some View {
         GeometryReader { geometry in
@@ -23,6 +31,29 @@ struct FaceDetectionView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: geometry.size.width, height: geometry.size.height)
+                    .scaleEffect(currentScale)
+                    .offset(x: currentOffset.width, y: currentOffset.height)
+                    .gesture(
+                        SimultaneousGesture(
+                            MagnificationGesture()
+                                .onChanged { value in
+                                    self.currentScale = self.lastScale * value
+                                }
+                                .onEnded { value in
+                                    self.lastScale = self.currentScale
+                                },
+                            DragGesture()
+                                .onChanged { value in
+                                    self.currentOffset = CGSize(
+                                        width: self.lastOffset.width + value.translation.width,
+                                        height: self.lastOffset.height + value.translation.height
+                                    )
+                                }
+                                .onEnded { value in
+                                    self.lastOffset = self.currentOffset
+                                }
+                        )
+                    )
                 
                 ForEach(faceObservations, id: \.self) { faceObservation in
                     let boundingBox = faceObservation.boundingBox
@@ -34,17 +65,17 @@ struct FaceDetectionView: View {
                             .frame(width: rect.width, height: rect.height)
                             .contentShape(Rectangle()) // Ensure the entire rectangle is tappable
                             .onTapGesture {
-                                print("Face details: \(faceObservation)")
                                 onFaceLongTap?(faceObservation)
                             }
                         
                         if let tag = tags[faceObservation] {
                             Text(tag)
                                 .foregroundColor(.red)
-                                .padding(2)
                         }
                     }
                     .position(x: rect.midX, y: rect.midY) // Adjust the position to place the tag below the rectangle
+                    .scaleEffect(currentScale)
+                    .offset(x: currentOffset.width, y: currentOffset.height)
                 }
             }
         }

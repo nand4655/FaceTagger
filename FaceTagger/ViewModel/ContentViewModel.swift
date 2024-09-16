@@ -41,6 +41,7 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    //TODO: "This method can be optimised using task group"
     func loadPhotos() async {
         updateProgress(0.0)
         setLoading(true)
@@ -57,10 +58,7 @@ class ContentViewModel: ObservableObject {
             updateProgress(Double(index + 1) / Double(totalImages))
         }
         
-        //TODO: Remove this delay. This delay is to simulate progress
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.setLoading(false)
-        }
+        self.setLoading(false)
     }
     
     private func updateProgress(_ progress: Double) {

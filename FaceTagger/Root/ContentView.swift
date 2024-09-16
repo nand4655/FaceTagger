@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var selectedFaceModelId: UUID?
     @State private var selectedFaceModel: FaceImageModel?
     @State private var isActive = false
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -32,7 +33,7 @@ struct ContentView: View {
                                     ForEach(viewModel.faceModels, id: \.id) { faceModel in
                                         NavigationLink(
                                             destination:
-                                                FaceDetectionView(image: faceModel.image ?? UIImage(), faceObservations: faceModel.observations ?? [], tags: faceModel.tags)
+                                                FaceRectOverlayView(image: faceModel.image ?? UIImage(), faceObservations: faceModel.observations ?? [], tags: faceModel.tags)
                                             {
                                                 faceObservation in
                                                 selectedFace = faceObservation

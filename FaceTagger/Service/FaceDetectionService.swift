@@ -33,7 +33,6 @@ class FaceDetectionService: IFaceDetection {
                     try handler.perform([request])
                     continuation.resume(returning: request.results)
                 } catch {
-                    print("Failed to perform face detection: \(error.localizedDescription)")
                     continuation.resume(returning: nil)
                 }
             }

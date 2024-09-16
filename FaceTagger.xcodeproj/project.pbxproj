@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E084EBD2C9833960090E057 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E084EBC2C9833960090E057 /* CustomProgressView.swift */; };
-		1E084EBF2C9839F10090E057 /* FaceDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E084EBE2C9839F10090E057 /* FaceDetectionView.swift */; };
+		1E084EBF2C9839F10090E057 /* FaceRectOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E084EBE2C9839F10090E057 /* FaceRectOverlayView.swift */; };
+		1E084EC12C983BE90090E057 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E084EC02C983BE90090E057 /* CustomProgressView.swift */; };
 		1E7522502C96ACA200B2786E /* FaceTaggerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E75224F2C96ACA200B2786E /* FaceTaggerApp.swift */; };
 		1E7522522C96ACA200B2786E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7522512C96ACA200B2786E /* ContentView.swift */; };
 		1E7522542C96ACA500B2786E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E7522532C96ACA500B2786E /* Assets.xcassets */; };
@@ -20,10 +20,7 @@
 		1E75227C2C96ACE700B2786E /* FaceDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E75227B2C96ACE700B2786E /* FaceDetectionService.swift */; };
 		1E7522802C96AD1700B2786E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E75227F2C96AD1700B2786E /* ContentViewModel.swift */; };
 		1E7522822C96CE9800B2786E /* PhotoLibraryPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7522812C96CE9800B2786E /* PhotoLibraryPermissionView.swift */; };
-		1EDC08102C9725EA00C2A989 /* FaceOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDC080F2C9725EA00C2A989 /* FaceOverlayView.swift */; };
-		1EDC08122C97261B00C2A989 /* FaceOverlayViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDC08112C97261B00C2A989 /* FaceOverlayViewRepresentable.swift */; };
 		1EDC08142C97296800C2A989 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDC08132C97296800C2A989 /* UIImage+Extensions.swift */; };
-		1EDC08162C97301C00C2A989 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDC08152C97301C00C2A989 /* CircularProgressView.swift */; };
 		1EDC081E2C97325000C2A989 /* FaceImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDC081D2C97325000C2A989 /* FaceImageModel.swift */; };
 		1EDC08202C9746BF00C2A989 /* FaceGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDC081F2C9746BF00C2A989 /* FaceGridView.swift */; };
 /* End PBXBuildFile section */
@@ -46,8 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1E084EBC2C9833960090E057 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
-		1E084EBE2C9839F10090E057 /* FaceDetectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionView.swift; sourceTree = "<group>"; };
+		1E084EBE2C9839F10090E057 /* FaceRectOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceRectOverlayView.swift; sourceTree = "<group>"; };
+		1E084EC02C983BE90090E057 /* CustomProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 		1E75224C2C96ACA200B2786E /* FaceTagger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceTagger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E75224F2C96ACA200B2786E /* FaceTaggerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTaggerApp.swift; sourceTree = "<group>"; };
 		1E7522512C96ACA200B2786E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,10 +59,7 @@
 		1E75227B2C96ACE700B2786E /* FaceDetectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionService.swift; sourceTree = "<group>"; };
 		1E75227F2C96AD1700B2786E /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		1E7522812C96CE9800B2786E /* PhotoLibraryPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPermissionView.swift; sourceTree = "<group>"; };
-		1EDC080F2C9725EA00C2A989 /* FaceOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceOverlayView.swift; sourceTree = "<group>"; };
-		1EDC08112C97261B00C2A989 /* FaceOverlayViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceOverlayViewRepresentable.swift; sourceTree = "<group>"; };
 		1EDC08132C97296800C2A989 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
-		1EDC08152C97301C00C2A989 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		1EDC081D2C97325000C2A989 /* FaceImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceImageModel.swift; sourceTree = "<group>"; };
 		1EDC081F2C9746BF00C2A989 /* FaceGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceGridView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,13 +152,10 @@
 		1EDC08172C97318C00C2A989 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1EDC08152C97301C00C2A989 /* CircularProgressView.swift */,
-				1EDC08112C97261B00C2A989 /* FaceOverlayViewRepresentable.swift */,
-				1EDC080F2C9725EA00C2A989 /* FaceOverlayView.swift */,
+				1E084EC02C983BE90090E057 /* CustomProgressView.swift */,
 				1E7522812C96CE9800B2786E /* PhotoLibraryPermissionView.swift */,
 				1EDC081F2C9746BF00C2A989 /* FaceGridView.swift */,
-				1E084EBC2C9833960090E057 /* CustomProgressView.swift */,
-				1E084EBE2C9839F10090E057 /* FaceDetectionView.swift */,
+				1E084EBE2C9839F10090E057 /* FaceRectOverlayView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -343,18 +334,15 @@
 			files = (
 				1E75227C2C96ACE700B2786E /* FaceDetectionService.swift in Sources */,
 				1EDC08202C9746BF00C2A989 /* FaceGridView.swift in Sources */,
+				1E084EC12C983BE90090E057 /* CustomProgressView.swift in Sources */,
 				1E75227A2C96ACC900B2786E /* PhotoLibraryService.swift in Sources */,
-				1EDC08122C97261B00C2A989 /* FaceOverlayViewRepresentable.swift in Sources */,
 				1EDC081E2C97325000C2A989 /* FaceImageModel.swift in Sources */,
 				1E7522802C96AD1700B2786E /* ContentViewModel.swift in Sources */,
 				1E7522522C96ACA200B2786E /* ContentView.swift in Sources */,
-				1EDC08102C9725EA00C2A989 /* FaceOverlayView.swift in Sources */,
-				1E084EBF2C9839F10090E057 /* FaceDetectionView.swift in Sources */,
-				1E084EBD2C9833960090E057 /* CustomProgressView.swift in Sources */,
+				1E084EBF2C9839F10090E057 /* FaceRectOverlayView.swift in Sources */,
 				1E7522502C96ACA200B2786E /* FaceTaggerApp.swift in Sources */,
 				1EDC08142C97296800C2A989 /* UIImage+Extensions.swift in Sources */,
 				1E7522822C96CE9800B2786E /* PhotoLibraryPermissionView.swift in Sources */,
-				1EDC08162C97301C00C2A989 /* CircularProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

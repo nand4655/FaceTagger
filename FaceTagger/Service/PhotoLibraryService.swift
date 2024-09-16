@@ -19,9 +19,14 @@ protocol IPhotoLibraryService {
 
 class PhotoLibraryService: IPhotoLibraryService {
     func requestPhotoLibraryAccess() async -> Bool {
-        await withCheckedContinuation { continuation in
-            PHPhotoLibrary.requestAuthorization { status in
-                continuation.resume(returning: status == .authorized)
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        if status == .authorized || status == .limited {
+            return true
+        } else {
+            return await withCheckedContinuation { continuation in
+                PHPhotoLibrary.requestAuthorization(for: .readWrite) { newStatus in
+                    continuation.resume(returning: newStatus == .authorized || newStatus == .limited)
+                }
             }
         }
     }
@@ -41,13 +46,14 @@ class PhotoLibraryService: IPhotoLibraryService {
     
     func fetchThumnbnail(asset: PHAsset, thumbnail: Bool) async -> UIImage? {
         return await withCheckedContinuation { continuation in
+            let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+            let deliveryMode: PHImageRequestOptionsDeliveryMode = status == .authorized ? .fastFormat : .opportunistic
             let imageManager = PHImageManager.default()
             let options = PHImageRequestOptions()
             options.isSynchronous = false
-            options.deliveryMode = .fastFormat
+            options.deliveryMode = deliveryMode
             
-            let targetSize = CGSize(width:  200, height: 200)
-            
+            let targetSize = CGSize(width:  200, height: 200)            
             imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options) { (image, info) in
                 continuation.resume(returning: image)
             }
