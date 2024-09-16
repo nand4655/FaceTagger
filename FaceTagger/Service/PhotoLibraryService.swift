@@ -51,6 +51,7 @@ class PhotoLibraryService: IPhotoLibraryService {
             let imageManager = PHImageManager.default()
             let options = PHImageRequestOptions()
             options.isSynchronous = false
+            options.isNetworkAccessAllowed = true
             options.deliveryMode = deliveryMode
             
             let targetSize = CGSize(width:  200, height: 200)            
@@ -65,6 +66,7 @@ class PhotoLibraryService: IPhotoLibraryService {
             let imageManager = PHImageManager.default()
             let options = PHImageRequestOptions()
             options.isSynchronous = false
+            options.isNetworkAccessAllowed = true
             options.deliveryMode = .highQualityFormat
             
             let targetSize = CGSize(width:  asset.pixelWidth, height: asset.pixelHeight)
